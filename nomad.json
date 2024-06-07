@@ -1,0 +1,87 @@
+{
+  "dashboard": {
+    "title": "Hashicorp Nomad Monitoring",
+    "widgets": [
+      {
+        "title": "Alive Nomad Nodes",
+        "visualization": "metric_line_chart",
+        "layout": {
+          "row": 1,
+          "column": 1,
+          "width": 6,
+          "height": 3
+        },
+        "data": [
+          {
+            "source": "prometheus",
+            "query": "nomad_memberlist_node_instances{node_state=\"alive\"}"
+          }
+        ]
+      },
+      {
+        "title": "Dead Nomad Nodes",
+        "visualization": "metric_line_chart",
+        "layout": {
+          "row": 1,
+          "column": 7,
+          "width": 6,
+          "height": 3
+        },
+        "data": [
+          {
+            "source": "prometheus",
+            "query": "nomad_memberlist_node_instances{node_state=\"dead\"}",
+            "thresholds": [
+              {
+                "type": "static",
+                "operator": "greaterThan",
+                "value": 0,
+                "severity": "critical"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Nomad Token TTL",
+        "visualization": "metric_line_chart",
+        "layout": {
+          "row": 4,
+          "column": 1,
+          "width": 6,
+          "height": 3
+        },
+        "data": [
+          {
+            "source": "prometheus",
+            "query": "nomad_nomad_vault_token_ttl",
+            "thresholds": [
+              {
+                "type": "static",
+                "operator": "equals",
+                "value": 0,
+                "severity": "critical"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Nomad Goroutines",
+        "visualization": "metric_line_chart",
+        "layout": {
+          "row": 4,
+          "column": 7,
+          "width": 6,
+          "height": 3
+        },
+        "data": [
+          {
+            "source": "prometheus",
+            "query": "nomad_runtime_num_goroutines"
+          }
+        ]
+      }
+    ]
+  }
+}
